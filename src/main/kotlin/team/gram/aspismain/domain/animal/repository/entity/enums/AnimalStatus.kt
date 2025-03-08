@@ -1,4 +1,4 @@
-package team.gram.aspismain.domain.animal.repository.entity
+package team.gram.aspismain.domain.animal.repository.entity.enums
 
 enum class AnimalStatus(val str: String) {
     PROTECTING("PROTECTING"),

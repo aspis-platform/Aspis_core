@@ -1,6 +1,8 @@
 package team.gram.aspismain.domain.animal.repository.entity
 
 import jakarta.persistence.*
+import team.gram.aspismain.domain.animal.repository.entity.enums.AnimalStatus
+import team.gram.aspismain.domain.animal.repository.entity.enums.Gender
 
 @Entity
 @Table(name = "tbl_animal")
@@ -13,7 +15,7 @@ data class Animal(
     @Column(name = "animal_name", unique = true) //Unique
     val animalName: String,
 
-    @Column(name = "admission_date")
+    @Column(name = "admission_date" , nullable = true)
     val admissionDate: String,
 
     @Column(name = "animal_gender")

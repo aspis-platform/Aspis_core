@@ -1,8 +1,7 @@
 package team.gram.aspismain.domain.animal.dto.response
 
-import team.gram.aspismain.domain.animal.repository.entity.Animal
-import team.gram.aspismain.domain.animal.repository.entity.Gender
-import team.gram.aspismain.domain.animal.repository.entity.AnimalStatus
+import team.gram.aspismain.domain.animal.repository.entity.enums.Gender
+import team.gram.aspismain.domain.animal.repository.entity.enums.AnimalStatus
 
 data class AnimalInfoResponse(
     val animalId: String,
