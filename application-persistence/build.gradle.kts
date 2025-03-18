@@ -9,6 +9,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    implementation("mysql:mysql-connector-java:8.0.33")
     testImplementation(kotlin("test"))
 }
 
