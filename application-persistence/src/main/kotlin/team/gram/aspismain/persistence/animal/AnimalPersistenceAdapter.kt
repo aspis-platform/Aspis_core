@@ -1,11 +1,13 @@
 package team.gram.aspismain.persistence.animal
 
+import org.springframework.stereotype.Component
 import team.gram.aspismain.domain.animal.model.Animal
 import team.gram.aspismain.domain.animal.spi.AnimalPort
 import team.gram.aspismain.persistence.animal.mapper.AnimalMapper
 import team.gram.aspismain.persistence.animal.repository.AnimalJpaRepository
 import java.util.UUID
 
+@Component
 class AnimalPersistenceAdapter(
     private val animalRepository: AnimalJpaRepository,
     private val animalMapper: AnimalMapper
