@@ -1,7 +1,8 @@
 package team.gram.aspismain.domain.animal.exception.error
 
-import team.gram.aspismain.global.exception.config.ErrorStatusCode
-import team.gram.aspismain.global.exception.config.ErrorProperty
+import team.gram.aspismain.common.error.ErrorProperty
+import team.gram.aspismain.common.error.ErrorStatusCode
+
 
 enum class AnimalExceptionCode (
     private val status: Int,
