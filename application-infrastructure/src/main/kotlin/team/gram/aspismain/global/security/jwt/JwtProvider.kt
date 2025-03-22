@@ -18,8 +18,8 @@ class JwtProvider(
             .setId(id)
             .claim(JwtProperties.AUTHORITY, authority.name)
             .setIssuedAt(Date())
-            .setExpiration(Date(System.currentTimeMillis() + securityProperties.accessExp))
-            .signWith(securityProperties.secretKey)
+            .setExpiration(Date(System.currentTimeMillis() + securityProperties.accessExp * 1000))
+            .signWith(securityProperties.getSigningKey())
             .compact()
     }
 
@@ -29,8 +29,8 @@ class JwtProvider(
             .setId(id)
             .claim(JwtProperties.AUTHORITY, authority.name)
             .setIssuedAt(Date())
-            .setExpiration(Date(System.currentTimeMillis() + securityProperties.refreshExp))
-            .signWith(securityProperties.secretKey)
+            .setExpiration(Date(System.currentTimeMillis() + securityProperties.refreshExp * 1000))
+            .signWith(securityProperties.getSigningKey())
             .compact()
     }
 }
