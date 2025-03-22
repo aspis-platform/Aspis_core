@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm")
+    kotlin("plugin.jpa")
 }
 
 apply(plugin = "io.spring.dependency-management")
