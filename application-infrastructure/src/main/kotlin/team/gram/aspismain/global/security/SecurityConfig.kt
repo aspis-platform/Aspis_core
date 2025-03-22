@@ -36,6 +36,7 @@ class SecurityConfig(
                     .requestMatchers(HttpMethod.GET, "/v1/animal/get-all").permitAll()
                     .requestMatchers(HttpMethod.GET, "/v1/animal/**").permitAll()
                     .requestMatchers(HttpMethod.POST, "/v1/animal").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/v1/animal/").permitAll()
                     .requestMatchers(HttpMethod.PUT, "/v1/animal/**").permitAll()
                     .requestMatchers(HttpMethod.DELETE, "/v1/animal/**").permitAll()
                 authorize
