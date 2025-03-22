@@ -10,8 +10,8 @@ import javax.crypto.SecretKey
 @ConfigurationProperties(prefix = "secret")
 class SecurityProperties {
     lateinit var secretKey: String
-    lateinit var accessExp: Number
-    lateinit var refreshExp: Number
+    var accessExp: Int = 0
+    var refreshExp: Int = 0
 
     fun getSigningKey(): SecretKey {
         return Keys.hmacShaKeyFor(
