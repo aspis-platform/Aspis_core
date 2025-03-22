@@ -5,6 +5,7 @@ plugins {
 apply(plugin = "io.spring.dependency-management")
 
 dependencies {
+    implementation(project(":application-core"))
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
