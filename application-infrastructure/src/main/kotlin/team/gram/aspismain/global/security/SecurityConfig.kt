@@ -31,19 +31,16 @@ class SecurityConfig(
                 authorize
                     // /healthcheck
                     .requestMatchers(HttpMethod.GET, "/").permitAll()
-
                 authorize
-                    // /auth
+                    // /animal
                     .requestMatchers(HttpMethod.GET, "/v1/animal/get-all").permitAll()
                     .requestMatchers(HttpMethod.GET, "/v1/animal/**").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/v1/animal/").permitAll()
                     .requestMatchers(HttpMethod.POST, "/v1/animal").permitAll()
-                    .requestMatchers(HttpMethod.DELETE, "/v1/animal/").permitAll()
-                    .requestMatchers(HttpMethod.PUT, "/v1/animal/").permitAll()
-
+                    .requestMatchers(HttpMethod.PUT, "/v1/animal/**").permitAll()
+                    .requestMatchers(HttpMethod.DELETE, "/v1/animal/**").permitAll()
                 authorize
                     // /users
-                    .requestMatchers(HttpMethod.GET, "/users/password").hasAnyAuthority(Authority.STAFF.name,Authority.STAFF.name)
+                    .requestMatchers(HttpMethod.GET, "/users/password").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
                     .requestMatchers(HttpMethod.PATCH, "/users/password").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
 
                 authorize
