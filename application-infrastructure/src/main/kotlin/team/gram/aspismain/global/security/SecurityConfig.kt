@@ -34,12 +34,12 @@ class SecurityConfig(
 
                 authorize
                     // /auth
-                    .requestMatchers(HttpMethod.GET, "/auth/account-id").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/auth/email").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/auth/code").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/auth/code").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/auth/tokens").permitAll()
-                    .requestMatchers(HttpMethod.PUT, "/auth/reissue").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/v1/animal/get-all").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/v1/animal/**").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/v1/animal/").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/v1/animal").permitAll()
+                    .requestMatchers(HttpMethod.DELETE, "/v1/animal/").permitAll()
+                    .requestMatchers(HttpMethod.PUT, "/v1/animal/").permitAll()
 
                 authorize
                     // /users
