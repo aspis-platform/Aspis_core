@@ -1,4 +1,5 @@
 package team.gram.aspismain.domain.animal.spi
 
-interface AnimalPort {
-}
+interface AnimalPort :
+        AnimalCommandPort,
+        AnimalQueryPort
