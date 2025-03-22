@@ -1,6 +1,7 @@
 package team.gram.aspismain.global.filter
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import org.springframework.context.annotation.Lazy
 import org.springframework.security.config.annotation.SecurityConfigurer
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.web.DefaultSecurityFilterChain
@@ -10,10 +11,9 @@ import team.gram.aspismain.global.security.jwt.JwtParser
 
 @Component
 class FilterConfig(
-    private val jwtParser: JwtParser,
+    @Lazy private val jwtParser: JwtParser,
     private val objectMapper: ObjectMapper,
-
-    ) : SecurityConfigurer<DefaultSecurityFilterChain, HttpSecurity> {
+) : SecurityConfigurer<DefaultSecurityFilterChain, HttpSecurity> {
     override fun init(builder: HttpSecurity?) {}
 
     override fun configure(builder: HttpSecurity) {
