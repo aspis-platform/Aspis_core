@@ -1,18 +1,16 @@
 package team.gram.aspismain.domain.animal
 
 import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import team.gram.aspismain.domain.animal.dto.AnimalResponse
-import team.gram.aspismain.domain.animal.dto.AnimalsResponse
 import team.gram.aspismain.domain.animal.dto.request.AnimalRequest
 import team.gram.aspismain.domain.animal.usecase.*
 import java.util.UUID
 
 @Validated
 @RestController
-@RequestMapping("/v1/animal")
+@RequestMapping("/v1/animals")
 class AnimalWebAdapter(
     private val getAllAnimalsUseCase: GetAllAnimalsUseCase,
     private val getAnimalByIdUseCase: GetAnimalByIdUseCase,
@@ -21,45 +19,43 @@ class AnimalWebAdapter(
     private val deleteAnimalUseCase: DeleteAnimalUseCase
 ) {
     @GetMapping("/get-all")
-    fun getAllAnimals(): ResponseEntity<AnimalsResponse> {
+    @ResponseStatus(HttpStatus.OK)
+    fun getAllAnimals(): List<AnimalResponse> {
         val animals = getAllAnimalsUseCase.execute()
-        val response = AnimalsResponse(
-            animals = animals.map { AnimalResponse.of(it) }
-        )
-        return ResponseEntity.ok(response)
+        return animals.map { AnimalResponse.of(it) }
     }
 
     @GetMapping("/{animalId}")
-    fun getAnimalById(@PathVariable animalId: UUID): ResponseEntity<AnimalResponse> {
+    @ResponseStatus(HttpStatus.OK)
+    fun getAnimalById(@PathVariable animalId: UUID): AnimalResponse {
         val animal = getAnimalByIdUseCase.execute(animalId)
-            ?: return ResponseEntity.notFound().build()
+            ?: throw NoSuchElementException("Animal not found with id: $animalId")
 
-        val response = AnimalResponse.of(animal)
-        return ResponseEntity.ok(response)
+        return AnimalResponse.of(animal)
     }
 
     @PostMapping
-    fun saveAnimal(@RequestBody @Validated request: AnimalRequest): ResponseEntity<AnimalResponse> {
+    @ResponseStatus(HttpStatus.CREATED)
+    fun saveAnimal(@RequestBody @Validated request: AnimalRequest): AnimalResponse {
         val animal = AnimalRequest.toEntity(request)
         val savedAnimal = saveAnimalUseCase.execute(animal)
-        val response = AnimalResponse.of(savedAnimal)
-        return ResponseEntity.status(HttpStatus.CREATED).body(response)
+        return AnimalResponse.of(savedAnimal)
     }
 
     @PutMapping("/{animalId}")
+    @ResponseStatus(HttpStatus.OK)
     fun updateAnimal(
         @PathVariable animalId: UUID,
         @RequestBody @Validated request: AnimalRequest
-    ): ResponseEntity<AnimalResponse> {
+    ): AnimalResponse {
         val animal = AnimalRequest.toEntity(request, animalId)
         val updatedAnimal = updateAnimalUseCase.execute(animal)
-        val response = AnimalResponse.of(updatedAnimal)
-        return ResponseEntity.ok(response)
+        return AnimalResponse.of(updatedAnimal)
     }
 
     @DeleteMapping("/{animalId}")
-    fun deleteAnimal(@PathVariable animalId: UUID): ResponseEntity<Void> {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deleteAnimal(@PathVariable animalId: UUID) {
         deleteAnimalUseCase.execute(animalId)
-        return ResponseEntity.noContent().build()
     }
 }
