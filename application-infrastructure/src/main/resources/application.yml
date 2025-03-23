@@ -1,31 +1,31 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/prod_aspis?serverTimezone=UTC&characterEncoding=UTF-8
-    username: root
-    password: mysqlpassword
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT:3306}/${DB_NAME:dev_aspis}?serverTimezone=UTC&characterEncoding=UTF-8
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-      ddl-auto: update
-    show-sql: true
+      ddl-auto: ${JPA_DDL_AUTO:update}
+    show-sql: ${SHOW_SQL:true}
     properties:
       hibernate:
-        format_sql: true
+        format_sql: ${FORMAT_SQL:true}
         dialect: org.hibernate.dialect.MySQL8Dialect
         jdbc:
           time_zone: UTC
   security:
     user:
-      password: yourFixedPassword
+      password: ${SECURITY_PASSWORD:yourFixedPassword}
 
 logging:
   level:
-    org.hibernate.SQL: debug
-    org.hibernate.type.descriptor.sql: trace
+    org.hibernate.SQL: ${LOG_SQL:debug}
+    org.hibernate.type.descriptor.sql: ${LOG_SQL_PARAMS:trace}
 
 secret:
-  secretKey: asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd
-  accessExp: 3600
-  refreshExp: 86400
+  secretKey: ${JWT_SECRET_KEY}
+  accessExp: ${JWT_ACCESS_EXP:3600}
+  refreshExp: ${JWT_REFRESH_EXP:86400}
