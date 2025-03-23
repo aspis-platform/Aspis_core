@@ -29,7 +29,3 @@ data class AnimalResponse(
         }
     }
 }
-
-data class AnimalsResponse(
-    val animals: List<AnimalResponse>
-)
