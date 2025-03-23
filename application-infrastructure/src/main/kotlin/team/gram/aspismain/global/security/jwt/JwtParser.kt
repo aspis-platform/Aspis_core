@@ -12,7 +12,7 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Component
-import team.gram.aspismain.global.exception.InternalServerError
+import team.gram.aspismain.global.exception.InternalServerErrorException
 import team.gram.aspismain.global.security.SecurityProperties
 import team.gram.aspismain.global.security.exception.ExpiredTokenException
 import team.gram.aspismain.global.security.exception.InvalidTokenException
@@ -49,7 +49,7 @@ class JwtParser(
                 is InvalidClaimException -> throw InvalidTokenException
                 is ExpiredJwtException -> throw ExpiredTokenException
                 is JwtException -> throw UnexceptedException
-                else -> throw InternalServerError
+                else -> throw InternalServerErrorException
             }
         }
     }
