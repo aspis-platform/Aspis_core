@@ -1,7 +1,13 @@
 package team.gram.aspismain.common.error
 
-import team.gram.aspismain.domain.animal.exception.error.AnimalExceptionCode
+open class AspisException : RuntimeException {
+    val errorCode: ErrorResponse
 
-abstract class AspisException(
-    val errorProperty: AnimalExceptionCode
-) : RuntimeException()
+    constructor(errorCode: ErrorResponse) : super(errorCode.message) {
+        this.errorCode = errorCode
+    }
+
+    constructor(errorCode: ErrorResponse, message: String) : super(message) {
+        this.errorCode = errorCode
+    }
+}
