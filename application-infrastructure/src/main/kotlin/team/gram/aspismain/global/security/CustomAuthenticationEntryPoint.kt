@@ -21,14 +21,13 @@ class CustomAuthenticationEntryPoint(
     ) {
         val errorCode = SecurityExceptionCode.FORBIDDEN_ACCESS
 
-        response?.status = errorCode.status()
+        response?.status = errorCode.status
         response?.contentType = MediaType.APPLICATION_JSON_VALUE
         response?.characterEncoding = "UTF-8"
 
         val errorResponse = mapOf(
-            "status" to errorCode.status(),
-            "code" to errorCode.code(),
-            "message" to errorCode.message()
+            "status" to errorCode.status,
+            "message" to errorCode.message
         )
 
         response?.writer?.write(objectMapper.writeValueAsString(errorResponse))

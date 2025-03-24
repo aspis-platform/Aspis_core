@@ -7,6 +7,7 @@ import io.jsonwebtoken.InvalidClaimException
 import io.jsonwebtoken.Jws
 import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.Jwts
+import org.springframework.context.annotation.Lazy
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetails
@@ -16,14 +17,14 @@ import team.gram.aspismain.global.exception.InternalServerErrorException
 import team.gram.aspismain.global.security.SecurityProperties
 import team.gram.aspismain.global.security.exception.ExpiredTokenException
 import team.gram.aspismain.global.security.exception.InvalidTokenException
-import team.gram.aspismain.global.security.exception.UnexceptedException
+import team.gram.aspismain.global.security.exception.UnexpectedTokenException
 import team.gram.team.gram.aspismain.domain.auth.model.Authority
 
 @Component
 class JwtParser(
     private val securityProperties: SecurityProperties,
-    private val studentDetailsService: UserDetailsService,
-    private val managerDetailsService: UserDetailsService
+    @Lazy private val studentDetailsService: UserDetailsService,
+    @Lazy private val managerDetailsService: UserDetailsService
 ) {
 
     fun getAuthentication(token: String): Authentication {
@@ -48,7 +49,7 @@ class JwtParser(
             when (e) {
                 is InvalidClaimException -> throw InvalidTokenException
                 is ExpiredJwtException -> throw ExpiredTokenException
-                is JwtException -> throw UnexceptedException
+                is JwtException -> throw UnexpectedTokenException
                 else -> throw InternalServerErrorException
             }
         }
@@ -61,7 +62,7 @@ class JwtParser(
         return when (authority) {
             Authority.STAFF.name -> studentDetailsService.loadUserByUsername(userId)
             Authority.MANAGER.name -> managerDetailsService.loadUserByUsername(userId)
-            else -> throw UnexceptedException
+            else -> throw UnexpectedTokenException
         }
     }
 }

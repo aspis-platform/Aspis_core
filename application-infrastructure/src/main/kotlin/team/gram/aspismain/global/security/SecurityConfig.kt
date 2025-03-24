@@ -1,5 +1,6 @@
 package team.gram.aspismain.global.security
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
@@ -8,14 +9,19 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
-import team.gram.aspismain.global.filter.FilterConfig
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import team.gram.aspismain.global.filter.ExceptionFilter
+import team.gram.aspismain.global.filter.JwtFilter
+import team.gram.aspismain.global.security.jwt.JwtParser
 import team.gram.team.gram.aspismain.domain.auth.model.Authority
 
 @Configuration
 class SecurityConfig(
     private val authenticationEntryPoint: CustomAuthenticationEntryPoint,
     private val accessDeniedHandler: CustomAccessDeniedHandler,
-    private val filterConfig: FilterConfig
+    private val jwtParser: JwtParser,
+    private val objectMapper: ObjectMapper
+
 ) {
 
     @Bean
@@ -33,12 +39,12 @@ class SecurityConfig(
                     .requestMatchers(HttpMethod.GET, "/").permitAll()
                 authorize
                     // /animal
-                    .requestMatchers(HttpMethod.GET, "/v1/animal/get-all").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/v1/animal/**").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/v1/animal").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/v1/animal/").permitAll()
-                    .requestMatchers(HttpMethod.PUT, "/v1/animal/**").permitAll()
-                    .requestMatchers(HttpMethod.DELETE, "/v1/animal/**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/v1/animals/get-all").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/v1/animals/**").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/v1/animals").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/v1/animals/").permitAll()
+                    .requestMatchers(HttpMethod.PUT, "/v1/animals/**").permitAll()
+                    .requestMatchers(HttpMethod.DELETE, "/v1/animals/**").permitAll()
                 authorize
                     // /users
                     .requestMatchers(HttpMethod.GET, "/users/password").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
@@ -65,8 +71,11 @@ class SecurityConfig(
                     .requestMatchers(HttpMethod.GET, "/schools/code").permitAll()
                     .anyRequest().denyAll()
             }
-        http
-            .apply(filterConfig)
+        val jwtFilter = JwtFilter(jwtParser)
+        val exceptionFilter = ExceptionFilter(objectMapper)
+
+        http.addFilterBefore(exceptionFilter, UsernamePasswordAuthenticationFilter::class.java)
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter::class.java)
 
         http
             .exceptionHandling { exceptionHandling -> exceptionHandling

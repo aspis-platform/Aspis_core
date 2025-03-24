@@ -1,21 +1,14 @@
 package team.gram.aspismain.global.security.exception.error
 
-import team.gram.aspismain.global.exception.config.ErrorStatusCode
-import team.gram.aspismain.global.exception.config.ErrorProperty
+import team.gram.aspismain.common.error.ErrorResponse
 
-enum class SecurityExceptionCode (
-    private val status: Int,
-    private val message: String,
-    private val sequence: Int
-) : ErrorProperty {
-
-    INVALID_TOKEN(ErrorStatusCode.UNAUTHORIZED, "Not a valid token", 1),
-    EXPIRED_TOKEN(ErrorStatusCode.UNAUTHORIZED, "Expired token", 2),
-    NOT_EXPECTED_TOKEN(ErrorStatusCode.UNAUTHORIZED,"Not a excepted token",3),
-    NOT_EXPECTED_ROLE(ErrorStatusCode.FORBIDDEN,"Not a excepted role",1),
-    FORBIDDEN_ACCESS(ErrorStatusCode.FORBIDDEN,"No permission to access",2);
-
-    override fun status(): Int = status
-    override fun message(): String = message
-    override fun code(): String = "$status-$sequence"
+enum class SecurityExceptionCode(
+    override val status: Int,
+    override val message: String,
+    override val sequence : String,
+) : ErrorResponse {
+    EXPIRED_TOKEN(401, "Expired token","SE-1"),
+    INVALID_TOKEN(401, "Invalid token","SE-2"),
+    UNEXPECTED_TOKEN(401, "Unexpected token","SE-3"),
+    FORBIDDEN_ACCESS(403, "No permission","SE-1"),
 }
