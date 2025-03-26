@@ -40,6 +40,7 @@ class JwtParser(
     }
 
     private fun getClaims(token: String): Jws<Claims> {
+        print(token)
         return try {
             Jwts.parserBuilder()
                 .setSigningKey(securityProperties.getSigningKey())
@@ -58,6 +59,7 @@ class JwtParser(
     private fun getDetails(body: Claims): UserDetails {
         val authority = body.get(JwtProperties.AUTHORITY, String::class.java)
         val userId = body.subject
+        print(userId)
 
         return when (authority) {
             Authority.STAFF.name -> studentDetailsService.loadUserByUsername(userId)
