@@ -10,10 +10,12 @@ data class AnimalResponse(
     val id: UUID,
     val name: String,
     val breedId: UUID,
-    val admissionDate: Date,
     val sex: AnimalSexType,
     val animalStatus: AnimalStatusType,
-    val profileUrl: String
+    val helperId: UUID,
+    val profileUrl: String,
+    val isNeutered: Boolean,
+    val birthYear: Int,
 ) {
     companion object {
         fun of(animal: Animal): AnimalResponse {
@@ -21,10 +23,12 @@ data class AnimalResponse(
                 id = animal.id,
                 name = animal.name,
                 breedId = animal.breedId,
-                admissionDate = animal.admissionDate,
+                isNeutered = animal.isNeutered,
                 sex = animal.sex,
                 animalStatus = animal.animalStatus,
-                profileUrl = animal.profile_url
+                profileUrl = animal.profile_url,
+                helperId = animal.helperId,
+                birthYear = animal.birthYear
             )
         }
     }

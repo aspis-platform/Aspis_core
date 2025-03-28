@@ -8,34 +8,38 @@ import jakarta.persistence.Table
 import team.gram.aspismain.domain.animal.model.AnimalSexType
 import team.gram.aspismain.domain.animal.model.AnimalStatusType
 import team.gram.aspismain.persistence.BaseEntity
+import java.time.Year
 import java.util.Date
 import java.util.UUID
 
 @Entity
 @Table(name = "tbl_animal")
 class AnimalJpaEntity(
-    @Column(nullable = false)
+    @Column(name = "breed_id",nullable = false)
     val breedId: UUID,
 
-    @Column(nullable = false)
+    @Column(name = "helper_id",nullable = false)
     val helperId: UUID,
 
-    @Column(nullable = false, length = 100)
+    @Column(name = "name",nullable = false, length = 100)
     val name: String,
 
-    @Column(nullable = false)
-    val admissionDate: Date,
+    @Column(name = "is_neutered",nullable = false)
+    val isNeutered: Boolean,
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "sex",nullable = false)
     val sex: AnimalSexType,
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "animal_status",nullable = false)
     val animalStatus: AnimalStatusType,
 
     @Column(name = "profile_url", length = 255)
     val profileUrl: String,
+
+    @Column(name = "birth_year", length = 4)
+    val birthYear: Int,
 
     id: UUID? = null
 ) : BaseEntity(id)

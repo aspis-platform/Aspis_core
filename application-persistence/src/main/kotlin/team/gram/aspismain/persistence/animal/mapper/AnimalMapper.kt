@@ -13,11 +13,12 @@ class AnimalMapper : GenericMapper<Animal, AnimalJpaEntity> {
             breedId = domain.breedId,
             helperId = domain.helperId,
             name = domain.name,
-            admissionDate = domain.admissionDate,
+            isNeutered = domain.isNeutered,
             sex = domain.sex,
             animalStatus = domain.animalStatus,
             profileUrl = domain.profile_url,
-            id = domain.id
+            id = domain.id,
+            birthYear = domain.birthYear
         )
     }
 
@@ -28,10 +29,11 @@ class AnimalMapper : GenericMapper<Animal, AnimalJpaEntity> {
                 breedId = it.breedId,
                 helperId = it.helperId,
                 name = it.name,
-                admissionDate = it.admissionDate,
+                isNeutered = it.isNeutered,
                 sex = it.sex,
                 animalStatus = it.animalStatus,
-                profile_url = it.profileUrl
+                profile_url = it.profileUrl,
+                birthYear = it.birthYear
             )
         }
     }

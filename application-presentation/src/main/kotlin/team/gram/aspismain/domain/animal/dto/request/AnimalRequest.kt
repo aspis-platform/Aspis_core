@@ -19,13 +19,16 @@ data class AnimalRequest(
     val helperId: UUID,
 
     @field:NotNull
-    val admissionDate: Date,
-
-    @field:NotNull
     val sex: AnimalSexType,
 
     @field:NotNull
+    val isNeutered :Boolean,
+
+    @field:NotNull
     val animalStatus: AnimalStatusType,
+
+    @field:NotNull
+    val birthYear: Int,
 
     val profileUrl: String
 ) {
@@ -36,10 +39,11 @@ data class AnimalRequest(
                 name = request.name,
                 breedId = request.breedId,
                 helperId = request.helperId,
-                admissionDate = request.admissionDate,
                 sex = request.sex,
                 animalStatus = request.animalStatus,
-                profile_url = request.profileUrl
+                profile_url = request.profileUrl,
+                birthYear = request.birthYear,
+                isNeutered = request.isNeutered
             )
         }
     }
