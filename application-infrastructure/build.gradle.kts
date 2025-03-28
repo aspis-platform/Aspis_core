@@ -40,3 +40,7 @@ tasks.named<Task>("compileJava") {
 tasks.named<Task>("classes") {
     dependsOn("compileJava")
 }
+
+tasks.withType<org.springframework.boot.gradle.tasks.bundling.BootJar> {
+    mainClass.set("team.gram.team.gram.aspismain.AspisMainServerApplicationKt")
+}

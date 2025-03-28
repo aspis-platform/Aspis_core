@@ -20,3 +20,7 @@ the<io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension>().a
         mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
     }
 }
+
+tasks.withType<org.springframework.boot.gradle.tasks.bundling.BootJar> {
+    mainClass.set("team.gram.team.gram.aspismain.AspisMainServerApplicationKt")
+}

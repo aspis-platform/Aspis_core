@@ -8,6 +8,11 @@ plugins {
 	kotlin("plugin.jpa") version "1.9.20" apply false
 }
 
+tasks.withType<org.springframework.boot.gradle.tasks.bundling.BootJar> {
+	mainClass.set("team.gram.team.gram.aspismain.AspisMainServerApplicationKt")
+}
+
+
 allprojects {
 	group = "team.gram"
 	version = "0.0.1-SNAPSHOT"
