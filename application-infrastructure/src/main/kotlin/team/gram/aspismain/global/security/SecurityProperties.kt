@@ -3,7 +3,7 @@ package team.gram.aspismain.global.security
 import io.jsonwebtoken.security.Keys
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.stereotype.Component
-import java.util.Base64
+import java.nio.charset.StandardCharsets
 import javax.crypto.SecretKey
 
 @Component
@@ -14,9 +14,6 @@ class SecurityProperties {
     var refreshExp: Int = 0
 
     fun getSigningKey(): SecretKey {
-        return Keys.hmacShaKeyFor(
-            Base64.getEncoder().encodeToString(secretKey.toByteArray())
-                .toByteArray(Charsets.UTF_8)
-        )
+        return Keys.hmacShaKeyFor(secretKey.toByteArray(StandardCharsets.UTF_8))
     }
 }

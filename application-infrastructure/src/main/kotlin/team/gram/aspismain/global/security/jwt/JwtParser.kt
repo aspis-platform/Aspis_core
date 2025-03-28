@@ -2,7 +2,6 @@ package team.gram.aspismain.global.security.jwt
 
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.ExpiredJwtException
-import io.jsonwebtoken.Header
 import io.jsonwebtoken.InvalidClaimException
 import io.jsonwebtoken.Jws
 import io.jsonwebtoken.JwtException
@@ -19,6 +18,7 @@ import team.gram.aspismain.global.security.exception.ExpiredTokenException
 import team.gram.aspismain.global.security.exception.InvalidTokenException
 import team.gram.aspismain.global.security.exception.UnexpectedTokenException
 import team.gram.team.gram.aspismain.domain.auth.model.Authority
+import java.util.*
 
 @Component
 class JwtParser(
@@ -28,19 +28,28 @@ class JwtParser(
 ) {
 
     fun getAuthentication(token: String): Authentication {
-        val claims = getClaims(token)
+        try {
+            val claims = getClaims(token)
 
-        if (claims.header[Header.JWT_TYPE] != JwtProperties.ACCESS) {
-            throw InvalidTokenException
+            val tokenType = claims.header["typ"] as? String
+            if (tokenType != JwtProperties.ACCESS) {
+                throw InvalidTokenException
+            }
+
+            val userDetails = getDetails(claims.body)
+            return UsernamePasswordAuthenticationToken(userDetails, "", userDetails.authorities)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            when (e) {
+                is InvalidTokenException,
+                is ExpiredTokenException,
+                is UnexpectedTokenException -> throw e
+                else -> throw UnexpectedTokenException
+            }
         }
-
-        val userDetails = getDetails(claims.body)
-
-        return UsernamePasswordAuthenticationToken(userDetails, "", userDetails.authorities)
     }
 
     private fun getClaims(token: String): Jws<Claims> {
-        print(token)
         return try {
             Jwts.parserBuilder()
                 .setSigningKey(securityProperties.getSigningKey())
@@ -51,20 +60,35 @@ class JwtParser(
                 is InvalidClaimException -> throw InvalidTokenException
                 is ExpiredJwtException -> throw ExpiredTokenException
                 is JwtException -> throw UnexpectedTokenException
-                else -> throw InternalServerErrorException
+                else -> {
+                    e.printStackTrace()
+                    throw InternalServerErrorException
+                }
             }
         }
     }
 
     private fun getDetails(body: Claims): UserDetails {
-        val authority = body.get(JwtProperties.AUTHORITY, String::class.java)
-        val userId = body.subject
-        print(userId)
+        try {
+            println("JwtProperties.ACCESS: ${JwtProperties.ACCESS}")
+            println("JwtProperties.AUTHORITY: ${JwtProperties.AUTHORITY}")
+            val authority = body.get(JwtProperties.AUTHORITY, String::class.java)
+                ?: throw InvalidTokenException
 
-        return when (authority) {
-            Authority.STAFF.name -> studentDetailsService.loadUserByUsername(userId)
-            Authority.MANAGER.name -> managerDetailsService.loadUserByUsername(userId)
-            else -> throw UnexpectedTokenException
+            val userId = body.get("id", String::class.java)
+                ?: throw InvalidTokenException
+
+            return when (authority) {
+                Authority.STAFF.name -> studentDetailsService.loadUserByUsername(userId)
+                Authority.MANAGER.name-> managerDetailsService.loadUserByUsername(userId)
+                else -> throw UnexpectedTokenException
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            if (e is InvalidTokenException || e is UnexpectedTokenException) {
+                throw e
+            }
+            throw UnexpectedTokenException
         }
     }
 }
