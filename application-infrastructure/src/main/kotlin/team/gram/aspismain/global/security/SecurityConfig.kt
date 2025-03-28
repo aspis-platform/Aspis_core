@@ -39,12 +39,12 @@ class SecurityConfig(
                     .requestMatchers(HttpMethod.GET, "/").permitAll()
                 authorize
                     // /animal
-                    .requestMatchers(HttpMethod.GET, "/v1/animals/get-all").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/v1/animals/**").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/v1/animals").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/v1/animals/").permitAll()
-                    .requestMatchers(HttpMethod.PUT, "/v1/animals/**").permitAll()
-                    .requestMatchers(HttpMethod.DELETE, "/v1/animals/**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/v1/animals/get-all").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
+                    .requestMatchers(HttpMethod.GET, "/v1/animals/**").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
+                    .requestMatchers(HttpMethod.POST, "/v1/animals").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
+                    .requestMatchers(HttpMethod.POST, "/v1/animals/").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
+                    .requestMatchers(HttpMethod.PUT, "/v1/animals/**").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
+                    .requestMatchers(HttpMethod.DELETE, "/v1/animals/**").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
                 authorize
                     // /users
                     .requestMatchers(HttpMethod.GET, "/users/password").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
