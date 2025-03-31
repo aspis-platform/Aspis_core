@@ -11,5 +11,5 @@ data class Animal(
     val sex: AnimalSexType,
     val animalStatus: AnimalStatusType,
     val birthYear: Int,
-    val profile_url: String,
+    val profileUrl: String,
 )

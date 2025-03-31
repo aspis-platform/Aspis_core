@@ -16,7 +16,7 @@ class AnimalMapper : GenericMapper<Animal, AnimalJpaEntity> {
             isNeutered = domain.isNeutered,
             sex = domain.sex,
             animalStatus = domain.animalStatus,
-            profileUrl = domain.profile_url,
+            profileUrl = domain.profileUrl,
             id = domain.id,
             birthYear = domain.birthYear
         )
@@ -32,7 +32,7 @@ class AnimalMapper : GenericMapper<Animal, AnimalJpaEntity> {
                 isNeutered = it.isNeutered,
                 sex = it.sex,
                 animalStatus = it.animalStatus,
-                profile_url = it.profileUrl,
+                profileUrl = it.profileUrl,
                 birthYear = it.birthYear
             )
         }

@@ -41,7 +41,7 @@ data class AnimalRequest(
                 helperId = request.helperId,
                 sex = request.sex,
                 animalStatus = request.animalStatus,
-                profile_url = request.profileUrl,
+                profileUrl = request.profileUrl,
                 birthYear = request.birthYear,
                 isNeutered = request.isNeutered
             )

@@ -26,7 +26,7 @@ data class AnimalResponse(
                 isNeutered = animal.isNeutered,
                 sex = animal.sex,
                 animalStatus = animal.animalStatus,
-                profileUrl = animal.profile_url,
+                profileUrl = animal.profileUrl,
                 helperId = animal.helperId,
                 birthYear = animal.birthYear
             )
