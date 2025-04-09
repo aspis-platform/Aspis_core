@@ -12,20 +12,20 @@ import java.util.UUID
 @Entity
 @Table(name = "tbl_user")
 class UserJpaEntity(
-    @Column(nullable = false, length = 100)
+    @Id
+    @Column(columnDefinition = "VARCHAR(36)" , name = "id")
+    val id: String = UUID.randomUUID().toString(),
+
+    @Column(nullable = false, length = 100, name = "user_name")
     val userName: String,
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true , name = "user_email")
     val userEmail: String,
 
-    @Column(nullable = false)
+    @Column(nullable = false , name = "user_password")
     val userPassword: String,
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    val userAuthority: UserAuthority = UserAuthority.STAFF,
-
-    @Id
-    @Column(columnDefinition = "VARCHAR(36)")
-    val id: String = UUID.randomUUID().toString()
+    @Column(nullable = false, name = "user_authority")
+    val userAuthority: UserAuthority = UserAuthority.STAFF
 )
