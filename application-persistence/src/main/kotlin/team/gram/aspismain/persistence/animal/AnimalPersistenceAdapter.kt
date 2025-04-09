@@ -38,4 +38,9 @@ class AnimalPersistenceAdapter(
             .map { animalMapper.toDomain(it) }
             .orElse(null)
     }
+    
+    override fun getAnimalsByHelperId(helperId: UUID): List<Animal> {
+        return animalRepository.findAllByHelperId(helperId)
+            .mapNotNull { animalMapper.toDomain(it) }
+    }
 }

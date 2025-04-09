@@ -4,4 +4,5 @@ enum class BreedSize {
     LARGE,
     MIDDLE,
     SMALL,
+    UNKNOWN
 }

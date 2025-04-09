@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*
 import team.gram.aspismain.domain.animal.dto.AnimalResponse
 import team.gram.aspismain.domain.animal.dto.request.AnimalRequest
 import team.gram.aspismain.domain.animal.usecase.*
+import team.gram.aspismain.domain.breed.service.BreedQueryService
+import team.gram.aspismain.domain.helper.service.HelperQueryService
 import java.util.UUID
 
 @Validated
@@ -16,13 +18,25 @@ class AnimalWebAdapter(
     private val getAnimalByIdUseCase: GetAnimalByIdUseCase,
     private val saveAnimalUseCase: SaveAnimalUseCase,
     private val updateAnimalUseCase: UpdateAnimalUseCase,
-    private val deleteAnimalUseCase: DeleteAnimalUseCase
+    private val deleteAnimalUseCase: DeleteAnimalUseCase,
+    private val breedQueryService: BreedQueryService,  // 추가
+    private val helperQueryService: HelperQueryService  // 추가
 ) {
     @GetMapping("/get-all")
     @ResponseStatus(HttpStatus.OK)
     fun getAllAnimals(): List<AnimalResponse> {
         val animals = getAllAnimalsUseCase.execute()
-        return animals.map { AnimalResponse.of(it) }
+        return animals.map { animal ->
+            val breed = breedQueryService.getBreedById(animal.breedId)
+            val helperName = animal.helperId?.let { helperQueryService.getHelperNameById(it) } ?: "Unknown"
+            
+            if (breed != null) {
+                AnimalResponse.of(animal, breed.name, breed.size, helperName)
+            } else {
+                val response = AnimalResponse.of(animal)
+                response.copy(helperName = helperName)
+            }
+        }
     }
 
     @GetMapping("/{animalId}")
@@ -31,7 +45,15 @@ class AnimalWebAdapter(
         val animal = getAnimalByIdUseCase.execute(animalId)
             ?: throw NoSuchElementException("Animal not found with id: $animalId")
 
-        return AnimalResponse.of(animal)
+        val breed = breedQueryService.getBreedById(animal.breedId)
+        val helperName = animal.helperId?.let { helperQueryService.getHelperNameById(it) } ?: "Unknown"
+        
+        return if (breed != null) {
+            AnimalResponse.of(animal, breed.name, breed.size, helperName)
+        } else {
+            val response = AnimalResponse.of(animal)
+            response.copy(helperName = helperName)
+        }
     }
 
     @PostMapping

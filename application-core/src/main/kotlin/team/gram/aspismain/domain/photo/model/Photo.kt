@@ -4,6 +4,5 @@ import java.util.*
 
 data class Photo(
     val id: UUID,
-    val animalId: UUID,
-    val
-    )
+    val animalId: UUID
+)

@@ -18,8 +18,8 @@ class AnimalJpaEntity(
     @Column(name = "breed_id",nullable = false)
     val breedId: UUID,
 
-    @Column(name = "helper_id",nullable = false)
-    val helperId: UUID,
+    @Column(name = "helper_id", nullable = true)
+    val helperId: UUID?,
 
     @Column(name = "name",nullable = false, length = 100)
     val name: String,

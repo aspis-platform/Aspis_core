@@ -15,8 +15,7 @@ data class AnimalRequest(
     @field:NotNull
     val breedId: UUID,
 
-    @field:NotNull
-    val helperId: UUID,
+    val helperId: UUID?,
 
     @field:NotNull
     val sex: AnimalSexType,

@@ -7,4 +7,5 @@ import java.util.UUID
 
 @Repository
 interface AnimalJpaRepository : CrudRepository<AnimalJpaEntity,UUID> {
+    fun findAllByHelperId(helperId: UUID): List<AnimalJpaEntity>
 }

@@ -5,7 +5,7 @@ import java.util.UUID
 data class Animal(
     val id: UUID,
     val breedId: UUID,
-    val helperId: UUID,
+    val helperId: UUID?,
     val name: String,
     val isNeutered: Boolean,
     val sex: AnimalSexType,
