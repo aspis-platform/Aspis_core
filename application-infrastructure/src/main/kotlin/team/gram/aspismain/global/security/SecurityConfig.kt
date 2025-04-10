@@ -46,18 +46,20 @@ class SecurityConfig(
                     .requestMatchers(HttpMethod.PUT, "/v1/animals/**").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
                     .requestMatchers(HttpMethod.DELETE, "/v1/animals/**").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
                 authorize
-                    // /users
-                    .requestMatchers(HttpMethod.GET, "/users/password").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
-                    .requestMatchers(HttpMethod.PATCH, "/users/password").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
-
+                    // /helpers
+                    .requestMatchers(HttpMethod.GET, "/v1/helpers").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
+                    .requestMatchers(HttpMethod.GET, "/v1/helpers/**").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
+                    .requestMatchers(HttpMethod.POST, "/v1/helpers").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
+                    .requestMatchers(HttpMethod.PUT, "/v1/helpers/**").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
+                    .requestMatchers(HttpMethod.DELETE, "/v1/helpers/**").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
                 authorize
-                    // /students
-                    .requestMatchers(HttpMethod.GET, "/students/email/duplication").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/students/account-id/duplication").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/students/account-id/{school-id}").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/students/name").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/students/profile").hasAuthority(Authority.STAFF.name)
-                    .requestMatchers(HttpMethod.POST, "/students/signup").permitAll()
+                    // /breeds
+                    .requestMatchers(HttpMethod.GET, "/v1/breeds").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
+                    .requestMatchers(HttpMethod.GET, "/v1/breeds/**").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
+                    .requestMatchers(HttpMethod.POST, "/v1/breeds").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
+                    .requestMatchers(HttpMethod.PUT, "/v1/breeds/**").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
+                    .requestMatchers(HttpMethod.DELETE, "/v1/breeds/**").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
+
                 authorize
                     // /managers
                     .requestMatchers(HttpMethod.GET, "/managers/account-id/{school-id}").permitAll()
