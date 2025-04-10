@@ -6,5 +6,4 @@ data class Helper(
     val id: UUID,
     val name: String,
     val phoneNumber: String,
-    val address: String
 )

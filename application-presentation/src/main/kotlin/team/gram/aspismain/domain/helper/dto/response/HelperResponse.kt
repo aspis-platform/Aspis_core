@@ -7,15 +7,13 @@ data class HelperResponse(
     val id: UUID,
     val name: String,
     val phoneNumber: String,
-    val address: String
 ) {
     companion object {
         fun fromModel(helper: Helper): HelperResponse {
             return HelperResponse(
                 id = helper.id,
                 name = helper.name,
-                phoneNumber = helper.phoneNumber,
-                address = helper.address
+                phoneNumber = helper.phoneNumber
             )
         }
     }

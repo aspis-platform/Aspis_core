@@ -14,7 +14,6 @@ class HelperMapper : GenericMapper<Helper, HelperJpaEntity> {
             id = entity.id!!,
             name = entity.name,
             phoneNumber = entity.phoneNumber,
-            address = entity.address
         )
     }
 
@@ -22,7 +21,6 @@ class HelperMapper : GenericMapper<Helper, HelperJpaEntity> {
         return HelperJpaEntity(
             name = domain.name,
             phoneNumber = domain.phoneNumber,
-            address = domain.address,
             id = domain.id
         )
     }
