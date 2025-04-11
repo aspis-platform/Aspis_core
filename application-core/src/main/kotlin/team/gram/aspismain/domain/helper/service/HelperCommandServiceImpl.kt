@@ -22,16 +22,13 @@ class HelperCommandServiceImpl(
     }
 
     override fun deleteHelper(helperId: UUID) {
-        // 먼저 이 Helper를 참조하는 모든 동물을 찾아 helperId를 null로 설정
         val animalsWithHelper = animalQueryPort.getAnimalsByHelperId(helperId)
-        
-        // 각 동물에 대해 helperId를 null로 설정하고 업데이트
+
         animalsWithHelper.forEach { animal ->
             val updatedAnimal = animal.copy(helperId = null)
             animalCommandPort.updateAnimal(updatedAnimal)
         }
-        
-        // Helper 삭제
+
         helperCommandPort.deleteHelper(helperId)
     }
 }
