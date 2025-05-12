@@ -1,5 +1,6 @@
 package team.gram.aspismain.domain.animal.model
 
+import java.util.Date
 import java.util.UUID
 
 data class Animal(
@@ -12,4 +13,5 @@ data class Animal(
     val animalStatus: AnimalStatusType,
     val birthYear: Int,
     val profileUrl: String,
+    val admissionDate: Date,
 )

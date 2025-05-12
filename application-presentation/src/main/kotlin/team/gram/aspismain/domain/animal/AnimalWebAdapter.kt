@@ -8,6 +8,7 @@ import team.gram.aspismain.domain.animal.dto.request.AnimalRequest
 import team.gram.aspismain.domain.animal.usecase.*
 import team.gram.aspismain.domain.breed.service.BreedQueryService
 import team.gram.aspismain.domain.helper.service.HelperQueryService
+import team.gram.aspismain.domain.weight.service.WeightQueryService
 import java.util.UUID
 
 @Validated
@@ -19,41 +20,25 @@ class AnimalWebAdapter(
     private val saveAnimalUseCase: SaveAnimalUseCase,
     private val updateAnimalUseCase: UpdateAnimalUseCase,
     private val deleteAnimalUseCase: DeleteAnimalUseCase,
-    private val breedQueryService: BreedQueryService,  // 추가
-    private val helperQueryService: HelperQueryService  // 추가
+    private val breedQueryService: BreedQueryService,
+    private val helperQueryService: HelperQueryService,
+    private val weightQueryService: WeightQueryService
 ) {
     @GetMapping("/get-all")
     @ResponseStatus(HttpStatus.OK)
     fun getAllAnimals(): List<AnimalResponse> {
-        val animals = getAllAnimalsUseCase.execute()
-        return animals.map { animal ->
-            val breed = breedQueryService.getBreedById(animal.breedId)
-            val helperName = animal.helperId?.let { helperQueryService.getHelperNameById(it) } ?: "Unknown"
-            
-            if (breed != null) {
-                AnimalResponse.of(animal, breed.name, breed.size, helperName)
-            } else {
-                val response = AnimalResponse.of(animal)
-                response.copy(helperName = helperName)
-            }
-        }
+        // 몸무게 정보가 포함된 상세 정보 반환 메서드 사용
+        return getAllAnimalsUseCase.executeWithDetails()
     }
 
     @GetMapping("/{animalId}")
     @ResponseStatus(HttpStatus.OK)
     fun getAnimalById(@PathVariable animalId: UUID): AnimalResponse {
-        val animal = getAnimalByIdUseCase.execute(animalId)
+        // 몸무게 정보가 포함된 상세 정보 반환 메서드 사용
+        val animalResponse = getAnimalByIdUseCase.executeWithDetails(animalId)
             ?: throw NoSuchElementException("Animal not found with id: $animalId")
-
-        val breed = breedQueryService.getBreedById(animal.breedId)
-        val helperName = animal.helperId?.let { helperQueryService.getHelperNameById(it) } ?: "Unknown"
         
-        return if (breed != null) {
-            AnimalResponse.of(animal, breed.name, breed.size, helperName)
-        } else {
-            val response = AnimalResponse.of(animal)
-            response.copy(helperName = helperName)
-        }
+        return animalResponse
     }
 
     @PostMapping

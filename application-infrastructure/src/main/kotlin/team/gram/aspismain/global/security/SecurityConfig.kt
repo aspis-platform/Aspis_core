@@ -39,7 +39,7 @@ class SecurityConfig(
                     .requestMatchers(HttpMethod.GET, "/").permitAll()
                 authorize
                     // /animal
-                    .requestMatchers(HttpMethod.GET, "/v1/animals/get-all").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
+                    .requestMatchers(HttpMethod.GET, "/v1/animals/get-all").permitAll()
                     .requestMatchers(HttpMethod.GET, "/v1/animals/**").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
                     .requestMatchers(HttpMethod.POST, "/v1/animals").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
                     .requestMatchers(HttpMethod.POST, "/v1/animals/").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
@@ -61,9 +61,13 @@ class SecurityConfig(
                     .requestMatchers(HttpMethod.DELETE, "/v1/breeds/**").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
 
                 authorize
-                    // /managers
-                    .requestMatchers(HttpMethod.GET, "/managers/account-id/{school-id}").permitAll()
-                    .requestMatchers(HttpMethod.PATCH, "/managers/password/initialization").permitAll()
+                    // /weight
+                    .requestMatchers(HttpMethod.GET, "/v1/weights").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
+                    .requestMatchers(HttpMethod.POST, "/v1/weights").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
+                    .requestMatchers(HttpMethod.GET, "/v1/weights/**").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
+                    .requestMatchers(HttpMethod.PUT, "/v1/weights/**").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
+                    .requestMatchers(HttpMethod.DELETE, "/v1/weights/**").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
+                    .requestMatchers(HttpMethod.PATCH, "/v1/weights/animal/**").hasAnyAuthority(Authority.STAFF.name,Authority.MANAGER.name)
 
                 authorize
                     // /schools

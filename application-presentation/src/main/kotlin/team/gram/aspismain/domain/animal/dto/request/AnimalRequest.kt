@@ -29,6 +29,9 @@ data class AnimalRequest(
     @field:NotNull
     val birthYear: Int,
 
+    @field:NotNull
+    val admissionDate: Date,
+
     val profileUrl: String
 ) {
     companion object {
@@ -42,7 +45,8 @@ data class AnimalRequest(
                 animalStatus = request.animalStatus,
                 profileUrl = request.profileUrl,
                 birthYear = request.birthYear,
-                isNeutered = request.isNeutered
+                isNeutered = request.isNeutered,
+                admissionDate = request.admissionDate,
             )
         }
     }

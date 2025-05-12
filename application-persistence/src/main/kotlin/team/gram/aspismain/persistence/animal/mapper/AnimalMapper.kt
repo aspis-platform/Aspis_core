@@ -18,7 +18,8 @@ class AnimalMapper : GenericMapper<Animal, AnimalJpaEntity> {
             animalStatus = domain.animalStatus,
             profileUrl = domain.profileUrl,
             id = domain.id,
-            birthYear = domain.birthYear
+            birthYear = domain.birthYear,
+            admissionDate = domain.admissionDate
         )
     }
 
@@ -33,7 +34,8 @@ class AnimalMapper : GenericMapper<Animal, AnimalJpaEntity> {
                 sex = it.sex,
                 animalStatus = it.animalStatus,
                 profileUrl = it.profileUrl,
-                birthYear = it.birthYear
+                birthYear = it.birthYear,
+                admissionDate = it.admissionDate
             )
         }
     }

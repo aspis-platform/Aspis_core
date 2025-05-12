@@ -41,5 +41,8 @@ class AnimalJpaEntity(
     @Column(name = "birth_year", length = 4)
     val birthYear: Int,
 
+    @Column(name = "admission_date")
+    val admissionDate: Date,
+
     id: UUID? = null
 ) : BaseEntity(id)
